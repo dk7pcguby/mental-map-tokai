@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>東海3県の精神科医療マップ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body { margin: 0; font-family: sans-serif; }
+    #map { height: 100vh; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // 地図を表示（中心は名古屋あたり）
+    const map = L.map('map').setView([35.1709, 136.8815], 8);
+
+    // OSMタイルを読み込み
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // 病院のピンを仮でいくつか追加（後でデータ連携）
+    const hospitals = [
+      { name: "名古屋メンタルクリニック", lat: 35.1709, lon: 136.8815 },
+      { name: "三重こころの病院", lat: 34.7303, lon: 136.5086 },
+      { name: "岐阜メンタルケアセンター", lat: 35.4233, lon: 136.7606 }
+    ];
+
+    hospitals.forEach(hospital => {
+      L.marker([hospital.lat, hospital.lon])
+        .addTo(map)
+        .bindPopup(`<strong>${hospital.name}</strong>`);
+    });
+  </script>
+</body>
+</html>
